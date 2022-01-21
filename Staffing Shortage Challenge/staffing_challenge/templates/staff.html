@@ -27,8 +27,8 @@
                 <th>Available?</th>
                 <th>Can Float?</th>
                 <th>Float Shifts Worked</th>
-                <th>View Shift Details</th>
                 <th>Add Float Shift</th>
+                <th>View Shift Details</th>
                 <th>Edit User</th>
             </tr>
         </thead>
@@ -43,9 +43,9 @@
                       <td>{{ row.availability }}</td>
                       <td>{{ row.can_float }}</td>
                       <td>{{ row.shifts_worked }}</td>
-                      <td><a href=""{{ url_for('register') }}>View Details</a></td>
-                      <td><a href=""{{ url_for('register') }}>Add Shift</a></td>
-                      <td><a href=""{{ url_for('register') }}>Edit</a></td>
+                      <td><a href="">Add Shift</a></td>
+                      <td><a href="{{ url_for('user_details', id=row.id) }}">View Details</a></td>
+                      <td><a href="">Edit</a></td>
                   </tr>
               {% endfor %}
           </tbody>

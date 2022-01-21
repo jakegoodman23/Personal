@@ -16,3 +16,4 @@ email_validator
 datetime
 pandas
 openpyxl
+psycopg2
