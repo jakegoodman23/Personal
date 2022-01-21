@@ -398,7 +398,7 @@ def user_details():
 @login_required
 def send_shift_email():
     email_address = "jakegoodman2412@gmail.com"
-    email_password = "Copper23_"
+    email_password = ""
 
     shift_id = request.args['shift']
     print(f'Test: {shift_id}')
