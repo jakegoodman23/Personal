@@ -18,6 +18,11 @@ a {
     text-decoration: underline;
 }
 
+p {
+    color: #0066CC;
+	font-size: 1.2rem;
+}
+
 .jumbotron {
   display: flex;
   align-items: center;
@@ -31,3 +36,4 @@ a {
     margin-top: 20px;
     padding-top: 20px;
 }
+

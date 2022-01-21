@@ -11,6 +11,7 @@ from wtforms.validators import DataRequired, Email, Length
 import os
 import datetime
 import pandas as pd
+import smtplib
 
 abspath = os.path.abspath(__file__)
 dirname = os.path.dirname(abspath)
@@ -193,7 +194,7 @@ def register():
         if new_user.role == "Admin":
             return render_template("batch_files.html", user=new_user, logged_in=True)
         else:
-            return render_template("login.html", logged_in=True)
+            return redirect(url_for('staff'))
 
     return render_template("register.html", form=registration_form)
 
@@ -352,7 +353,7 @@ def add_user():
             phone_num=user_form.phone_num.data,
             availability=user_form.availability.data,
             can_float=user_form.can_float.data,
-            password="password"
+            password=generate_password_hash(password="password", method='pbkdf2:sha256', salt_length=8)
         )
 
         db.session.add(new_user)
@@ -376,7 +377,7 @@ def accept_shift():
             user_to_update.shifts_worked = 0
         user_to_update.shifts_worked = user_to_update.shifts_worked + 1
         db.session.commit()
-        return redirect(url_for('shift'))
+        return redirect(url_for('send_shift_email', shift=cur_shift_id))
 
     shift_id = request.args.get('id')
     cur_shift = Shift.query.get(shift_id)
@@ -391,6 +392,36 @@ def user_details():
         .order_by(Shift.date, Shift.start_time)
     user_name = User.query.get(shift_user_id).name
     return render_template('user_shifts.html', shifts=user_shift_info, user_name=user_name, logged_in=True)
+
+
+@app.route('/sendemail', methods=['GET', 'POST'])
+@login_required
+def send_shift_email():
+    email_address = "jakegoodman2412@gmail.com"
+    email_password = "Copper23_"
+
+    shift_id = request.args['shift']
+    print(f'Test: {shift_id}')
+    accepted_shift = Shift.query.get(shift_id)
+    added_by_user = accepted_shift.added_by_id
+    posted_user = User.query.get(added_by_user)
+    added_by_email = posted_user.email
+
+    contents = f"Your posted shift for {accepted_shift.date} at {accepted_shift.location} in the {accepted_shift.area} " \
+               f"area has been picked by: " \
+               f"{User.query.get(accepted_shift.picked_up_by_id).name}"
+    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+        #connection.ehlo()
+        connection.starttls()
+        connection.login(email_address, email_password)
+        connection.sendmail(
+            from_addr=email_address,
+            to_addrs=added_by_email,
+            msg=f"Subject:Your {accepted_shift.date} shift has been picked up!\n\n{contents}"
+        )
+
+    return redirect(url_for('shift'))
+
 
 
 if __name__ == '__main__':
