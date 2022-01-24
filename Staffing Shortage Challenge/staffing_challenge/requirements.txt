@@ -17,3 +17,4 @@ datetime
 pandas
 openpyxl
 smtplib
+python-dotenv

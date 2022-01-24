@@ -187,10 +187,9 @@ def register():
             can_float=registration_form.can_float.data,
             password=hash_and_salted_password
         )
-
         db.session.add(new_user)
         db.session.commit()
-
+        login_user(new_user)
         if new_user.role == "Admin":
             return render_template("batch_files.html", user=new_user, logged_in=True)
         else:
@@ -411,7 +410,6 @@ def send_shift_email():
                f"area has been picked by: " \
                f"{User.query.get(accepted_shift.picked_up_by_id).name}"
     with smtplib.SMTP("smtp.gmail.com", 587) as connection:
-        #connection.ehlo()
         connection.starttls()
         connection.login(email_address, email_password)
         connection.sendmail(
@@ -421,7 +419,6 @@ def send_shift_email():
         )
 
     return redirect(url_for('shift'))
-
 
 
 if __name__ == '__main__':
