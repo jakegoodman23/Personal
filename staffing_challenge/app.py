@@ -15,7 +15,7 @@ import os
 import datetime
 import pandas as pd
 import smtplib
-from dotenv import load_dotenv, find_dotenv
+
 
 abspath = os.path.abspath(__file__)
 dirname = os.path.dirname(abspath)
@@ -540,9 +540,6 @@ def edit_user():
     user_id = request.args.get('id')
     user_info = User.query.get(user_id)
     return render_template('edit_user.html', user=user_info, logged_in=True)
-
-
-
 
 
 @app.route('/sendemail', methods=['GET', 'POST'])
