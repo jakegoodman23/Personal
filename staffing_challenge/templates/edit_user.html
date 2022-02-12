@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{#{% block styles %}#}
+{#{{ super() }}#}
+{#	<link rel="stylesheet" href="{{ url_for('static', filename='css/form_style.css') }}">#}
+{#    #}
+{#{% endblock %}#}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+
+<body>
+
+<div class="edit_user_form">
+    <h3>Edit user info for: {{ user.name }}</h3>
+    <form class="edit_user_form" action="{{ url_for('edit_user') }}" method="POST">
+        <input hidden="hidden" name="id" value="{{ user.id }}">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ user.name }}">
+        <label for="role">Role</label>
+        <p id="current_role">(current role: {{ user.role }})</p>
+        <select name="role" id="role">
+            <option value="{{ user.role }}" selected hidden>Select an option</option>
+            <option value="RN">RN</option>
+            <option value="Medical Assistant">Medical Assistant</option>
+            <option value="Scrub Tech">Scrub Tech</option>
+            <option value="CRNA">CRNA</option>
+        </select>
+        <label for="location">Location</label>
+        <input type="text" name="location" value="{{ user.location }}">
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ user.email }}">
+        <label for="phone_num">Phone Number</label>
+        <input type="text" name="phone_num" value="{{ user.phone_num }}">
+        <label for="can_float">Can staff member float?</label>
+        <select name="can_float" id="can_float">
+            <option value="{{ user.can_float }}" selected hidden>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="N/A">N/A</option>
+        </select>
+        <label for="availability">Is staff member currently available?</label>
+        <select name="availability" id="availability">
+            <option value="{{ user.availability }}" selected hidden>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <input type="submit" value="Edit User Info">
+    </form>
+</div>
+</body>
+
+{% endblock %}

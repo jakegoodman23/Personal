@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Remove Shift{% endblock %}
+
+{% block content %}
+    <div class="outer-warning">
+    <div class="alert alert-danger alert-dismissable" role="alert">
+        {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+         <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    </div>
+     <form class="remove_shift_form" action="{{ url_for('remove_shift') }}" method="POST">
+         <p>Location: {{shift.location}}</p>
+         <p>Role Needed: {{shift.role}}</p>
+         <p>Area: {{shift.area}}</p>
+         <p>Date: {{shift.date}}</p>
+         <p>Start Time: {{shift.start_time}}</p>
+         <p>End Time: {{shift.end_time}}</p>
+         <input hidden="hidden" name="id" value="{{shift.shift_id}}">
+         {% if permission %}
+             <p style="color:red;">Click Remove Shift below if you're sure you want to remove this shift</p>
+            <button class="btn-form-bottom" type="submit">Remove Shift</button>
+         {% endif %}
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Accept Shift{% endblock %}
+
+{% block content %}
+
+     <form class="accept_shift_form" action="{{ url_for('accept_shift') }}" method="POST">
+         <p>Location: {{shift.location}}</p>
+         <p>Role Needed: {{shift.role}}</p>
+         <p>Area: {{shift.area}}</p>
+         <p>Date: {{shift.date}}</p>
+         <p>Start Time: {{shift.start_time}}</p>
+         <p>End Time: {{shift.end_time}}</p>
+         <p style="color:red;">Shift Comments: {{ shift.comments }}</p>
+         <input hidden="hidden" name="id" value="{{shift.shift_id}}">
+        <button class="btn-form-bottom" type="submit">Accept Shift</button>
+    </form>
+
+{% endblock %}

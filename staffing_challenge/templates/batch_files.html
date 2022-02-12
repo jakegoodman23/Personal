@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+<h1>Downloading Batch Upload Templates</h1>
+  <body class="body">
+     <div class="container">
+         <a href="{{ url_for('download_staff') }}" target="blank"><button class='btn btn-large'>Download Staff Roster Template</button></a>
+         <a href="{{ url_for('download_shifts') }}" target="blank"><button class='btn btn-large'>Download Shift Template</button></a>
+     </div>
+  </body>
+</div>
+{% endblock %}
